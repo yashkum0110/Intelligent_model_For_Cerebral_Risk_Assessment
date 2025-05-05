@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stroke Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: slideIn 1s ease-in-out;
+            background: linear-gradient(45deg, #ff6f61, #ff3b2f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        .form-floating input, .form-floating select {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .form-floating input:focus, .form-floating select:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 111, 97, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transform: scale(1.02);
+        }
+        .form-floating label {
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: #ff6f61;
+            border: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        .btn-primary:hover {
+            background: #ff3b2f;
+            transform: scale(1.05);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .text-justify {
+            color: #e0e0e0;
+            animation: fadeInText 2s ease-in-out;
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            animation: slideUp 1s ease-in-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .form-floating {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .form-floating input, .form-floating select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .form-floating label {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .form-floating input:focus ~ label, .form-floating select:focus ~ label,
+        .form-floating input:not(:placeholder-shown) ~ label, .form-floating select:not(:placeholder-shown) ~ label {
+            top: 0;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .form-select {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .form-select:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 111, 97, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .form-select option {
+            background: #764ba2;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Stroke Prediction using Machine Learning</h2>
+        <p class="text-justify">
+            Stroke is the second leading cause of death globally, responsible for approximately 11% of total deaths (WHO). 
+            Stroke is a medical condition characterized by disrupted blood supply to the brain, leading to cellular death. 
+            Signs and symptoms of a stroke may include an inability to move or feel on one side of the body, problems understanding 
+            or speaking, dizziness, or loss of vision to one side.
+        </p>
+
+        <div class="mt-4">
+            <form method="POST" class="row g-3">
+                <h4 class="mb-3">User Input Features</h4>
+                
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" name="age" id="age" min="1" max="100" required placeholder=" ">
+                        <label for="age">Age</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="gender" id="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <label for="gender">Gender</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <input type="number" step="0.01" class="form-control" name="avg_glucose_level" id="avg_glucose_level" min="40.0" max="300.0" required placeholder=" ">
+                        <label for="avg_glucose_level">Average Glucose Level</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="hypertension" id="hypertension" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <label for="hypertension">Hypertension</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="heart_disease" id="heart_disease" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <label for="heart_disease">Heart Disease</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="ever_married" id="ever_married" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <label for="ever_married">Ever Married</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="residence_type" id="residence_type" required>
+                            <option value="Urban">Urban</option>
+                            <option value="Rural">Rural</option>
+                        </select>
+                        <label for="residence_type">Residence Type</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="smoking_status" id="smoking_status" required>
+                            <option value="Never Smoked">Never Smoked</option>
+                            <option value="Formerly Smoked">Formerly Smoked</option>
+                            <option value="Smokes">Smokes</option>
+                            <option value="Unknown">Unknown</option>
+                        </select>
+                        <label for="smoking_status">Smoking Status</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <select class="form-select" name="work_type" id="work_type" required>
+                            <option value="Private">Private</option>
+                            <option value="Self-employed">Self-employed</option>
+                            <option value="Government job">Government job</option>
+                            <option value="Children">Children</option>
+                            <option value="Never Worked">Never Worked</option>
+                        </select>
+                        <label for="work_type">Work Type</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" name="bmi" id="bmi" min="10" max="100" required placeholder=" ">
+                        <label for="bmi">BMI</label>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary w-100">Predict Stroke Likelihood</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
