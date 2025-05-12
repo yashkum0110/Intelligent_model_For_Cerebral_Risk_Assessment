@@ -54,6 +54,8 @@
             margin: 10px 0;
             font-size: 14px;
             line-height: 1.4;
+            white-space: pre-wrap; /* Ensure line breaks are preserved */
+            word-wrap: break-word; /* Handle long words */
         }
         code {
             font-family: monospace;
