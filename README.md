@@ -81,6 +81,3 @@ The `Stroke Prediction Using Python (3).ipynb` notebook contains the following s
 6.  **Open your web browser:**
     Open your browser and go to `http://localhost:5000` to access the application.
 
-## `requirements.txt`
-
-A basic `requirements.txt` file should contain:
